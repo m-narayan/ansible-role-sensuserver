@@ -1,0 +1,14 @@
+---
+- name: restart rabbitmq
+  command: service rabbitmq-server restart
+
+- name: restart redis
+  command: service redis restart
+
+- name: restart sensu
+  command: service {{ item }} restart
+  with_items:
+   - sensu-server
+   - sensu-api
+   - sensu-client
+   - sensu-dashboard

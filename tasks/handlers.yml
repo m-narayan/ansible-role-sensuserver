@@ -1,0 +1,15 @@
+---
+- name: Install the handlers and handlers
+  template: src=handler_sets.json.j2 dest=/etc/sensu/conf.d/handler_sets.json
+
+- name: Create the handlers directory
+  action: file path=/etc/sensu/handlers state=directory
+
+- name: Fetch the handlers
+  action: get_url url={{ item }} dest=/etc/sensu/handlers owner=root group=root mode=0755
+  with_items:
+    - https://raw.github.com/sensu/sensu-community-plugins/master/handlers/notification/flowdock.rb
+    - https://raw.github.com/sensu/sensu-community-plugins/master/handlers/notification/hipchat.rb
+    - https://raw.github.com/sensu/sensu-community-plugins/master/handlers/notification/opsgenie.rb
+    - https://raw.github.com/sensu/sensu-community-plugins/master/handlers/notification/pagerduty.rb
+    - https://raw.github.com/sensu/sensu-community-plugins/master/handlers/notification/twiliosms.rb   

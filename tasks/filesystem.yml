@@ -1,0 +1,19 @@
+---
+- name: Create the rabitmqssl directory
+  action: file path=/etc/rabbitmq/ssl state=directory owner=root group=root
+
+- name: Create the sensussl directory
+  action: file path=/etc/sensu/ssl state=directory owner=root group=root
+
+- name: Copy the ssl certs to the rabbit folders
+  copy: src=files/{{ item }}.pem  dest=/etc/rabbitmq/ssl/{{ item }}.pem  owner=rabbitmq group=rabbitmq mode=0640
+  with_items:
+   - "{{ cacert }}"
+   - "{{ server_key }}"
+   - "{{ server_cert }}"
+
+- name: Copy the ssl certs to the sensu folders
+  copy: src=files/client_{{ item }}.pem  dest=/etc/sensu/ssl/{{ item }}.pem mode=0640
+  with_items:
+   - "{{ client_key }}"
+   - "{{ client_cert }}"
