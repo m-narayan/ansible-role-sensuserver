@@ -1,6 +1,7 @@
 ---
 #
 - include: dependencies.yml
+- include: generatecerts.yml
 - include: filesystem.yml
 - include: rabbitvhost.yml
 - include: handler_s.yml

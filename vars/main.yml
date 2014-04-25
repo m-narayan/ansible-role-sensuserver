@@ -1,2 +1,4 @@
 ---
 my_secret: apasswordgoeshere
+repo_url: "git://github.com/joemiller/joemiller.me-intro-to-sensu.git"
+get_dir : "/opt/joemiller/"

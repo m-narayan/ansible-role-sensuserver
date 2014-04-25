@@ -1,0 +1,18 @@
+---
+#
+- name: Get joes config files for generating certs
+  action: git repo={{ repo_url }}  dest={{ get_dir }}
+
+- name: Cretae the certificates
+  shell: /opt/joemiller/ssl_certs.sh generate
+
+- name: Copy the certificates to staging host
+  fetch: chdir=/opt/joemiller src=/opt/joemiller/{{ items }}.pem dest=files/certs/ flat=yes
+  with_items:
+   - "client_key"
+   - "client_cert"
+   - "server_key"
+   - "server_cert"
+
+- name: Copy the test CA cert
+  fetch: chdir=/opt/joemiller/testca src=/opt/joemiller/testca/cacert.pem dest=files/certs/ flat=yes
